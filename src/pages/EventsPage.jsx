@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function EventsPage() {
   const containerRef = useRef(null);
-  const mainImageRef = useRef(null);
+  const mainPlaceholderRef = useRef(null);
   const secondaryColRef = useRef(null);
 
   useEffect(() => {
@@ -23,19 +23,19 @@ export default function EventsPage() {
         ease: "power3.out",
       });
 
-      // 2. Parallax for the FULL Main Image
-      gsap.to(mainImageRef.current, {
+      // 2. Parallax for the Main Structural Block
+      gsap.to(mainPlaceholderRef.current, {
         y: -80,
         ease: "none",
         scrollTrigger: {
-          trigger: mainImageRef.current,
+          trigger: mainPlaceholderRef.current,
           scrub: 1.5,
           start: "top bottom",
           end: "bottom top",
         },
       });
 
-      // 3. Parallax for small side images
+      // 3. Parallax for Timing Cards
       gsap.to(secondaryColRef.current, {
         y: 50,
         ease: "none",
@@ -69,12 +69,12 @@ export default function EventsPage() {
   return (
     <div className="relative min-h-screen bg-[#080808] py-24 lg:py-40 overflow-hidden" ref={containerRef}>
       
-      {/* Subtle Ethnic Background */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/mandala-ornament.png')]" />
+      {/* Subtle Pattern Background (CSS-based, no image needed) */}
+      <div className="absolute inset-0 opacity-[0.15] pointer-events-none bg-[radial-gradient(#2a221b_1px,transparent_1px)] [background-size:40px_40px]" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         
-        {/* Top Section: Branding + Secondary Images */}
+        {/* Top Section: Branding + Timing Cards */}
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center mb-40">
           <div className="lg:w-1/2">
             <div className="overflow-hidden mb-6">
@@ -105,31 +105,62 @@ export default function EventsPage() {
             </Link>
           </div>
 
-          {/* Secondary Images (Side-by-side) */}
+          {/* Timings Cards (Replacing Side Images) */}
           <div ref={secondaryColRef} className="lg:w-1/2 flex gap-4 w-full">
-             <div className="flex-1 aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 bg-[#111]">
-                <img src="src/assets/cafe2.png" className="w-full h-full object-cover" alt="Ambience" />
-             </div>
-             <div className="flex-1 aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 bg-[#111] mt-12">
-                <img src="src/assets/cafe3.png" className="w-full h-full object-cover" alt="Table Setting" />
-             </div>
+            {/* Weekdays Card */}
+            <div className="flex-1 aspect-[4/5] rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex flex-col justify-between">
+              <div>
+                <span className="text-cafe-brown font-bold tracking-[0.3em] uppercase text-[9px] block mb-2">Schedule</span>
+                <h4 className="text-white font-[Playfair_Display] text-3xl">Weekdays</h4>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <p className="text-gray-500 text-[10px] uppercase tracking-widest mb-1">Lunch</p>
+                  <p className="text-white font-light text-xl">12:00 — 15:30</p>
+                </div>
+                <div className="w-8 h-[1px] bg-cafe-brown/30" />
+                <div>
+                  <p className="text-gray-500 text-[10px] uppercase tracking-widest mb-1">Dinner</p>
+                  <p className="text-white font-light text-xl">19:00 — 23:00</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Weekends Card */}
+            <div className="flex-1 aspect-[4/5] rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent p-8 mt-12 flex flex-col justify-between border-b-cafe-brown/20">
+              <div>
+                <span className="text-cafe-brown font-bold tracking-[0.3em] uppercase text-[9px] block mb-2">Experience</span>
+                <h4 className="text-white font-[Playfair_Display] text-3xl">Weekends</h4>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <p className="text-gray-500 text-[10px] uppercase tracking-widest mb-1">All Day</p>
+                  <p className="text-white font-light text-xl">12:00 — 23:30</p>
+                </div>
+                <p className="text-[10px] text-cafe-brown/60 italic leading-relaxed">
+                  *Live music & brunch specials available every Sunday
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* --- THE MAIN CAFE IMAGE SECTION --- */}
-        {/* Full width, no cropping, showing the image exactly as it is */}
+        {/* --- MAIN ARCHITECTURAL BLOCK (Replacing Main Cafe Image) --- */}
         <div className="w-full relative py-20">
           <div className="overflow-hidden rounded-[3rem] border border-white/5 bg-[#0a0a0a] shadow-[0_50px_100px_rgba(0,0,0,0.8)]">
-            <div ref={mainImageRef} className="w-500">
-              <img
-                src="src/assets/cafe.png" 
-                className="w-full h-auto block" // Critical: h-auto ensures the full original height is shown
-                alt="Our Restaurant Architecture"
-              />
+            <div ref={mainPlaceholderRef} className="w-full aspect-video flex items-center justify-center relative bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#1a1512] via-[#0d0d0d] to-[#080808]">
+              {/* Abstract Minimalist SVG Logo/Pattern */}
+              <svg width="120" height="120" viewBox="0 0 100 100" className="opacity-20 text-cafe-brown">
+                <rect x="20" y="20" width="60" height="60" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                <path d="M50 10 L50 90 M10 50 L90 50" stroke="currentColor" strokeWidth="0.2" />
+              </svg>
             </div>
           </div>
           
-          {/* Elegant Float Caption */}
+          {/* Caption remains to ground the design */}
           <div className="absolute -bottom-6 right-4 md:right-12 bg-cafe-brown p-8 md:p-14 rounded-3xl max-w-sm shadow-2xl z-20">
              <span className="text-white/60 uppercase tracking-[0.3em] text-[9px] font-bold block mb-4">The Venue</span>
              <p className="text-white font-[Playfair_Display] text-2xl md:text-3xl leading-snug">
